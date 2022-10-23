@@ -66,7 +66,7 @@ Unmarked -> Not finished or not started
 - [ ] Cleanup main.py
 - [ ] Add Timeouts
 - [ ] Add Multi-Threading
-- [ ] Add Regex to check mails
+- [X] Add Regex to check mails
 - [ ] Add the option to style text with markdown
 - [ ] Hide Console
 
