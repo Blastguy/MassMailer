@@ -1,6 +1,7 @@
 import PySimpleGUI as sg
 
 from Core import Server, GUI
+from Utilities import MailValidation as ev
 
 
 def sendMails():
@@ -35,10 +36,7 @@ def loadEmails():
     """
     file = sg.filedialog.askopenfile()
     if file:
-        fileContent = file.readlines()
-        if len(emails) > 0:
-            View['-LoadedEmails-'].update(str(len(emails)))
-        return fileContent
+        return file.readlines()
 
 
 def checkLogin():
@@ -47,7 +45,7 @@ def checkLogin():
     works, then update the status label to say that the server is online and the account is connected. If it doesn't work,
     then update the status label to say that the server is online but the account could not be connected
     """
-    if not values['-email-'] is None and not values['-password-'] is None:
+    if not values['-email-'] is None and not values['-password-'] is None and ev.isGmailValid(values['-email-']):
         if server.login(values['-email-'], values['-password-']):
             View['-status-'].update('Server online | Account connected')
             print(values['-email-'] + " " + values['-password-'])
@@ -76,6 +74,9 @@ if __name__ == '__main__':
 
             case 'Load Emails':
                 emails = loadEmails()
+                emails = ev.getValidMails(emails)
+                if len(emails) > 0:
+                    View['-LoadedEmails-'].update(str(len(emails)))
 
             case 'Start mailing':
                 if int(str(values['-amountEmail-'])) > 0 and len(values['-text-']) > 0 and len(emails) > 0:
