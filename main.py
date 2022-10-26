@@ -68,21 +68,17 @@ if __name__ == '__main__':
     while True:
         event, values = View.read()
 
-        match event:
-            case 'Login':
-                checkLogin()
-
-            case 'Load Emails':
-                emails = loadEmails()
-                emails = ev.getValidMails(emails)
-                if len(emails) > 0:
-                    View['-LoadedEmails-'].update(str(len(emails)))
-
-            case 'Start mailing':
-                if int(str(values['-amountEmail-'])) > 0 and len(values['-text-']) > 0 and len(emails) > 0:
-                    View['-status-'].update('Server online | Started sending mails')
-                    sendMails()
-
-            case sg.WIN_CLOSED:
-                window.closeUI()
-                break
+        if event == 'Login':
+            checkLogin()
+        elif event == 'Load Emails':
+            emails = loadEmails()
+            emails = ev.getValidMails(emails)
+            if len(emails) > 0:
+                View['-LoadedEmails-'].update(str(len(emails)))
+        elif event == 'Start mailing':
+            if int(str(values['-amountEmail-'])) > 0 and len(values['-text-']) > 0 and len(emails) > 0:
+                View['-status-'].update('Server online | Started sending mails')
+                sendMails()
+        elif event == sg.WIN_CLOSED:
+            window.closeUI()
+            break
