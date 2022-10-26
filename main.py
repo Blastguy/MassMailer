@@ -22,11 +22,11 @@ def sendMail(email):
     maxRetries = 3
     while maxRetries > 0:
         if server.sendmail(email, values['-text-']):
-            View['-emailValid-'].update(str(int(values['-emailValid-'] + 1)))
+            View['-emailValid-'].update(str(int(View['-emailValid-'].get()) + 1))
             break
         else:
-            maxRetries += 1
-            View['-emailInvalid-'].update(str(int(values['-emailInvalid-'] + 1)))
+            maxRetries -= 1
+            View['-emailInvalid-'].update(str(int(View['-emailInvalid-'].get()) + 1))
 
 
 def loadEmails():
